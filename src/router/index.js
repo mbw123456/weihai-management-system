@@ -12,6 +12,11 @@ import chartsRouter from './modules/charts'
 import tableRouter from './modules/table'
 import nestedRouter from './modules/nested'
 
+import resourceRouter from './modules/resource'   //资源管理
+import requirementRouter from './modules/requirement'   //资源管理
+import serviceRouter from './modules/service'   //服务管理
+
+
 /**
  * Note: sub-menu only appear when route children.length >= 1
  * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
@@ -92,6 +97,45 @@ export const constantRoutes = [
         component: () => import('@/views/member/index'),
         name: 'Member',
         meta: { title: '会员管理', icon: 'peoples', affix: true }
+      }
+    ]
+  },
+  resourceRouter,
+  ...requirementRouter,
+  ...serviceRouter,
+  {
+    path: '/success',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/success/index'),
+        name: 'Member',
+        meta: { title: '成功案例管理', icon: 'star', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/recommend',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/recommend/index'),
+        name: 'Member',
+        meta: { title: '推荐管理', icon: 'guide', affix: true }
+      }
+    ]
+  },
+  {
+    path: '/news',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/news/index'),
+        name: 'Member',
+        meta: { title: '新闻中心', icon: 'excel', affix: true }
       }
     ]
   },

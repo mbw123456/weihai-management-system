@@ -1,13 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="filter-container-update">
-      批量导入：
-      <upload-excel-component style="margin:15px 0;" :on-success="handleSuccess" :before-upload="beforeUpload" />
-      <!-- <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox> -->
-    </div>
-
     <div class="filter-container">
       <el-date-picker
         v-model="value2"
@@ -201,7 +193,6 @@
 </template>
 
 <script>
-import UploadExcelComponent from '@/components/UploadExcel/index.vue'
 import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
@@ -222,7 +213,7 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination,UploadExcelComponent },
+  components: { Pagination },
   directives: { waves },
   filters: {
     statusFilter(status) {
@@ -315,23 +306,6 @@ export default {
     this.getList()
   },
   methods: {
-    beforeUpload(file) {
-      const isLt1M = file.size / 1024 / 1024 < 1
-
-      if (isLt1M) {
-        return true
-      }
-
-      this.$message({
-        message: 'Please do not upload files larger than 1m in size.',
-        type: 'warning'
-      })
-      return false
-    },
-    handleSuccess({ results, header }) {
-      console.log(results);
-      console.log(header);
-    },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -501,12 +475,4 @@ export default {
   width:7%;
 }
 </style>
-<style scoped>
-.filter-container-update{
-  border-bottom:1px solid #ddd;
-  padding:10px 0;
-  margin-bottom:15px;
-}
-</style>
-
 

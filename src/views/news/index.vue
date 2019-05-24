@@ -1,13 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="filter-container-update">
-      批量导入：
-      <upload-excel-component style="margin:15px 0;" :on-success="handleSuccess" :before-upload="beforeUpload" />
-      <!-- <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox> -->
-    </div>
-
     <div class="filter-container">
       <el-date-picker
         v-model="value2"
@@ -154,30 +146,12 @@
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="70px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="Type" prop="type">
-          <el-select v-model="temp.type" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Date" prop="timestamp">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
-        </el-form-item>
-        <el-form-item label="Title" prop="title">
-          <el-input v-model="temp.title" />
-        </el-form-item>
-        <el-form-item label="Status">
-          <el-select v-model="temp.status" class="filter-item" placeholder="Please select">
-            <el-option v-for="item in statusOptions" :key="item" :label="item" :value="item" />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="Imp">
-          <el-rate v-model="temp.importance" :colors="['#99A9BF', '#F7BA2A', '#FF9900']" :max="3" style="margin-top:8px;" />
-        </el-form-item>
-        <el-form-item label="Remark">
-          <el-input v-model="temp.remark" :autosize="{ minRows: 2, maxRows: 4}" type="textarea" placeholder="Please input" />
-        </el-form-item>
-      </el-form>
+      <div class="components-container">
+        <div>
+          <tinymce v-model="content" :height="300" />
+        </div>
+        <div class="editor-content" v-html="content" />
+      </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">
           Cancel
@@ -201,8 +175,8 @@
 </template>
 
 <script>
-import UploadExcelComponent from '@/components/UploadExcel/index.vue'
 import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
+import Tinymce from '@/components/Tinymce'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -222,7 +196,7 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination,UploadExcelComponent },
+  components: { Pagination,Tinymce },
   directives: { waves },
   filters: {
     statusFilter(status) {
@@ -267,6 +241,7 @@ export default {
         }]
       },
       value2: '',
+      content:'',
 
       
       tableKey: 0,
@@ -315,23 +290,6 @@ export default {
     this.getList()
   },
   methods: {
-    beforeUpload(file) {
-      const isLt1M = file.size / 1024 / 1024 < 1
-
-      if (isLt1M) {
-        return true
-      }
-
-      this.$message({
-        message: 'Please do not upload files larger than 1m in size.',
-        type: 'warning'
-      })
-      return false
-    },
-    handleSuccess({ results, header }) {
-      console.log(results);
-      console.log(header);
-    },
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
@@ -501,12 +459,4 @@ export default {
   width:7%;
 }
 </style>
-<style scoped>
-.filter-container-update{
-  border-bottom:1px solid #ddd;
-  padding:10px 0;
-  margin-bottom:15px;
-}
-</style>
-
 

@@ -2,9 +2,9 @@
   <div>
     <input ref="excel-upload-input" class="excel-upload-input" type="file" accept=".xlsx, .xls" @change="handleClick">
     <div class="drop" @drop="handleDrop" @dragover="handleDragover" @dragenter="handleDragover">
-      Drop excel file here or
-      <el-button :loading="loading" style="margin-left:16px;" size="mini" type="primary" @click="handleUpload">
-        Browse
+      将Excel拖拽到此处
+      <el-button :loading="loading" style="margin-left:16px; vertical-align:3px;" type="primary" @click="handleUpload">
+        点击上传
       </el-button>
     </div>
   </div>
@@ -126,13 +126,13 @@ export default {
 .drop{
   border: 2px dashed #bbb;
   width: 600px;
-  height: 160px;
-  line-height: 160px;
-  margin: 0 auto;
-  font-size: 24px;
+  height: 80px;
+  line-height: 80px;
+  font-size: 18px;
   border-radius: 5px;
   text-align: center;
   color: #bbb;
   position: relative;
+  font-weight: normal;
 }
 </style>

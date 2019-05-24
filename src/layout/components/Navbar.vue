@@ -16,14 +16,15 @@
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
 
+        <b style="display:inline-block; padding: 0 8px; height: 100%;font-size: 14px ; font-weight:normal; vertical-align:15px;">
+          马博文
+          <el-button type="text" style="margin-left:10px;" @click="logout">退出</el-button>
+        </b>
       </template>
 
-      <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
-        <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
-          <i class="el-icon-caret-bottom" />
-        </div>
-        <el-dropdown-menu slot="dropdown">
+      <!-- <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click"> -->
+        
+        <!-- <el-dropdown-menu slot="dropdown">
           <router-link to="/profile/index">
             <el-dropdown-item>Profile</el-dropdown-item>
           </router-link>
@@ -37,10 +38,10 @@
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>
           <el-dropdown-item divided>
-            <span style="display:block;" @click="logout">Log Out</span>
+            
           </el-dropdown-item>
         </el-dropdown-menu>
-      </el-dropdown>
+      </el-dropdown> -->
     </div>
   </div>
 </template>
